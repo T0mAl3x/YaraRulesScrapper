@@ -2,6 +2,9 @@
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
+from scrapy.loader import ItemLoader
+from YaraScrapper.items import YarascrapperItem
+from urllib.parse import urlparse
 
 
 class YaraSpiderSpider(CrawlSpider):
@@ -9,11 +12,12 @@ class YaraSpiderSpider(CrawlSpider):
     start_urls = ['https://github.com/Yara-Rules/rules/']
 
     custom_settings = {
-        'CONCURRENT_REQUESTS': 24,
-        'REACTOR_THREADPOOL_MAXSIZE': 24,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 4,
+        'CONCURRENT_REQUESTS': 10,
+        'REACTOR_THREADPOOL_MAXSIZE': 10,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
         'DEPTH_PRIORITY': 8,
         'DOWNLOAD_TIMEOUT': 90,
+        'DOWNLOAD_DELAY': 0.25,
         'RETRY_TIMES': 1,
         'MAX_PAGES_PER_DOMAIN': 1500,
         'RETRY_HTTP_CODES': []
@@ -27,6 +31,8 @@ class YaraSpiderSpider(CrawlSpider):
     )
 
     def parse_item(self, response):
-        yield {
-            'url': response.url
-        }
+        loader = ItemLoader(item=YarascrapperItem(), )
+        loader.add_value('file_urls', response.url)
+        name = urlparse(response.url).path.split("/")[-1]
+        loader.add_value('file_name', name)
+        yield loader.load_item()

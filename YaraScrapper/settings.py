@@ -64,9 +64,17 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'YaraScrapper.pipelines.YarascrapperPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'YaraScrapper.pipelines.YarascrapperPipeline': 1,
+}
+import sys
+files_path = None
+for arg in sys.argv:
+    if "=" in arg:
+        splited = arg.split("=")
+        if splited[0]=="files_path":
+            files_path = splited[1]
+FILES_STORE = files_path
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

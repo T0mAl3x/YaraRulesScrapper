@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\Master\My_Dizertation\Project\WindowsYaraService\WindowsYaraService\Modules\Update\YaraRulesScrapper\venv"
+VIRTUAL_ENV="D:\Master\My_Dizertation\Project\YaraRulesScrapper\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

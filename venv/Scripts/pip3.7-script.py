@@ -1,4 +1,4 @@
-#!D:\Master\My_Dizertation\Project\WindowsYaraService\WindowsYaraService\Modules\Update\YaraRulesScrapper\venv\Scripts\python.exe
+#!D:\Master\My_Dizertation\Project\YaraRulesScrapper\venv\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==19.0.3','console_scripts','pip3.7'
 __requires__ = 'pip==19.0.3'
 import re
