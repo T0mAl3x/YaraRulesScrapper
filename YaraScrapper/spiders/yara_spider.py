@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule
+from scrapy.http import Request
 from scrapy.linkextractors import LinkExtractor
 from scrapy.loader import ItemLoader
 from YaraScrapper.items import YarascrapperItem
@@ -31,6 +32,11 @@ class YaraSpiderSpider(CrawlSpider):
     )
 
     def parse_item(self, response):
+        relative_url = response.xpath('//a[@id="raw-url"]/@href').extract_first()
+        absolute_url = response.urljoin(relative_url)
+        yield Request(absolute_url, callback=self.download_item)
+
+    def download_item(self, response):
         loader = ItemLoader(item=YarascrapperItem(), )
         loader.add_value('file_urls', response.url)
         name = urlparse(response.url).path.split("/")[-1]
